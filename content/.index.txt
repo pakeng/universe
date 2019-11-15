@@ -1,2 +1,2 @@
-<center>-={ ls -l }=-</center>
-$(ls -l $root)
+<center>-={ ls }=-</center>
+$(ls $root)

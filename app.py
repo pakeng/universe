@@ -5,6 +5,7 @@ from mimetypes import guess_type as guess_mime
 from werkzeug.utils import secure_filename
 from os.path import realpath
 import os, sys, time, universe, markdown
+import random, json
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -54,13 +55,30 @@ def return_robotstxt():
         response.headers["Content-Type"] = "text/plain; charset=UTF-8;"
         return response
 
-@app.route("/")
+@app.route("/index")
 def catch_index():
         return catch_all(".index.txt")
 
+
+
+@app.route("/")
+def catch_du():
+        return catch_all(".d.d")
+
+@app.route("/msg")
+def catch_msg():
+        arrayData = json.loads(catch_data())
+        data = arrayData[random.randint(0,1222)]
+        return data["title"]
+
+@app.route("/data")
+def catch_data():
+        return catch_all(".soul.json")
+
+@app.route("/index.html")
 @app.route("/.index.txt")
 def reroute_index():
-        return redirect("/", code=302)
+        return redirect("/index", code=302)
 
 @app.route("/<path:path>")
 def catch_all(path):
@@ -111,6 +129,11 @@ def get_document(path):
                         elif extension in ["html", "htm"]:
                                 res.headers["Content-Type"] = "text/html; charset=UTF-8"
                                 res.set_data(data)
+                        elif extension in ["d"]:
+                                res.headers["Content-Type"] = "text/html; charset=UTF-8"
+                                res.set_data(render_template("txt.html", data=meta))
+                        elif extension in ["json"]:
+                               res = universe.parse(data.decode("utf-8"), path)
                         else:
                                 res.headers["Content-Type"] = "text/plain; charset=UTF-8"
                                 res.set_data(data)

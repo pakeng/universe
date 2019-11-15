@@ -1,0 +1,39 @@
+{% extends "base.html.jinja" %}
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+<link rel="stylesheet" href="/css/txt.css">
+{% endblock head %}
+{% block body %}
+<div id="app" class="txt-container">
+<!-- <div class="txt-header">.: <a href="/">[home]</a> <a href="{{ data.up }}">[..]</a> | {{ data.ip }} :.
+
+</div> -->
+<div class="txt-content">
+<!-- {{ data.content }} -->
+[[ message ]]
+</div>
+<input class="next-button" v-on:click="getNew" type="button" value="Next">
+</div>
+
+<script>
+    var vm = new Vue({
+        delimiters:['[[', ']]'],
+        el: '#app',
+        data: {
+            message: '面对疾风吧！！！'
+        },
+        methods: {
+            getNew: function (){
+                axios
+                .get('../msg')
+                .then(response => (vm.message = response.data ))
+                .catch(function (error) { // 请求失败处理
+                  console.log(error);
+                });
+            }
+        },  
+      })
+</script>
+
+{% endblock body %}
