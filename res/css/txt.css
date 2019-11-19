@@ -64,7 +64,7 @@ input {
         border-bottom: solid 0.2rem #19CF86;
         align-content: center;
         margin-top: 10%;
-        padding: 0rem 2rem;
+        padding: 0 auto;
         text-align: center;
 }
 
@@ -76,4 +76,8 @@ div.txt-content pre {
         background-color: rgba(25, 207, 134, 0.1);
         padding: 1.0rem;
         white-space: pre-wrap;
+}
+
+.msg-content {
+        margin-top: 15%;
 }
